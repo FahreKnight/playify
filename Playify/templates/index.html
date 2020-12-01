@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<div class="jumbotron text-center">
+        <h3>Playify</h3>
+        <p></p>
+</div>
+
+
+<p>
+        {% if request.user.is_authenticated %}
+                Login Succesfully, {{request.user.username}}
+        {% endif %}
+
+</p>
+{% endblock body %}
+
