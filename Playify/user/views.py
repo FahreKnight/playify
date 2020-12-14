@@ -12,17 +12,26 @@ def register(request):
 
     form = RegisterForm(request.POST or None)
     if form.is_valid():
-        
         username = form.cleaned_data.get("username")
         password = form.cleaned_data.get("password")
 
+##        test_user = authenticate(username = username)
+##
+##       if test_user is not None:
+##           messages.info(request,"This Username already Taken")
+##           return render(request,"register.html",context)
+##
      
-        newUser = User(username =username)
+        newUser = User(username = username)
         newUser.set_password(password)
 
         newUser.save()
+
+        
+        #newProfile = Profile(username = username, password = password)
+        
         login(request,newUser)
-        messages.info(request,"Sign Up Successfully...")
+        messages.success(request,"Sign Up Successfully...")
 
         return redirect("index")
     context = {

@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth.models import User
 
 class LoginForm(forms.Form):
     username = forms.CharField(label = "Username")
@@ -14,6 +15,10 @@ class RegisterForm(forms.Form):
         username = self.cleaned_data.get("username")
         password = self.cleaned_data.get("password")
         confirm = self.cleaned_data.get("confirm")
+    
+        if User.objects.filter(username=self.cleaned_data['username']).exists():
+            raise forms.ValidationError("This Username is already taken")
+
 
         if password and confirm and password != confirm:
             raise forms.ValidationError("Passwords are not same")

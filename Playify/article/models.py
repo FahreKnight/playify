@@ -3,7 +3,7 @@ from ckeditor.fields import RichTextField
 # Create your models here.
 
 class Article(models.Model):
-    author = models.ForeignKey("auth.User",on_delete = models.CASCADE,verbose_name = "Yazar ")
+    author = models.ForeignKey("auth.User",on_delete = models.CASCADE,verbose_name = "Username ")
     title = models.CharField(max_length = 50,verbose_name = "Title")
     content = RichTextField()
     created_date = models.DateTimeField(auto_now_add=True,verbose_name="Creating Time")
@@ -22,3 +22,5 @@ class Comment(models.Model):
         return self.comment_content
     class Meta:
         ordering = ['-comment_date']
+
+    
