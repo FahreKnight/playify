@@ -24,7 +24,7 @@
 
     <!-- Post Content Column -->
     <div class="col-lg-8">
-
+      <img class="rounded-circle account-img" width="50" height="50" src="{{ article.author.profile.image.url }}">
       <!-- Title -->
       <a href="{% url 'article:detail' article.id %}"><h2 class="mt-4">{{article.title}}</h2></a> 
         

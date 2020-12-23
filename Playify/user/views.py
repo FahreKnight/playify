@@ -1,8 +1,10 @@
+from django.http.response import HttpResponse
 from django.shortcuts import render,redirect
-from .forms import RegisterForm,LoginForm
+from .forms import ProfileForm, RegisterForm,LoginForm,SettingsForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login,authenticate,logout
+from .models import Profile
 
 
 
@@ -67,4 +69,34 @@ def logoutUser(request):
     logout(request)
     messages.success(request,"Logout Successfully")
     return redirect("index")
+
+def profile(request):
+    u_form = SettingsForm()
+
+    context = {
+        'u_form': u_form
+
+    }
+    return render(request,"profile.html",context)
+
+def profilesettings(request):
+    if request.method == 'POST':
+        u_form = SettingsForm(request.POST, instance=request.user)
+        p_form = ProfileForm(request.POST, files=request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, f'Your account has been updated!')
+
+            return render(request,"profilesettings.html")
+
+    else:
+        u_form = SettingsForm(instance=request.user)
+        p_form = ProfileForm(instance=request.user.profile)
+
+    context = {
+        'u_form': u_form,
+        'p_form': p_form
+    }
+    return render(request,"profilesettings.html",context)
 

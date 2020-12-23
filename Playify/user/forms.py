@@ -1,5 +1,10 @@
 from django import forms
+from django.contrib import auth
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
+from django.db.models.fields import AutoField
+from django.http import request
+from .models import Profile
 
 class LoginForm(forms.Form):
     username = forms.CharField(label = "Username")
@@ -30,3 +35,37 @@ class RegisterForm(forms.Form):
         return values
 
 
+class SettingsForm(forms.ModelForm):
+    username = forms.CharField(max_length = 50,label = "Username")
+    change= forms.BooleanField(label="Change username",required=False)
+    class Meta:
+        model = User
+        fields = ['username']
+
+    def clean(self):
+        username = self.cleaned_data.get("username")
+        
+        if User.objects.filter(username=self.cleaned_data['username']).exists() and self.cleaned_data.get("change"):
+            raise forms.ValidationError("This Username is already taken")
+
+
+        values = {
+            "username" : username
+        }
+        return values
+
+class ProfileForm(forms.ModelForm):
+    status = forms.CharField(max_length = 50,label = "Status ")
+    image = forms.ImageField(required=False)
+    class Meta:
+        model = Profile
+        fields = ['status','image']
+
+    def clean(self):
+        status = self.cleaned_data.get("status")
+        image= self.cleaned_data.get("image")
+        values = {
+            "status" : status,
+            "image" : image
+        }
+        return values
