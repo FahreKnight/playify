@@ -8,6 +8,7 @@ from PIL import Image
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    following = models.ManyToManyField(User, related_name='following', blank=True)
     password = models.CharField(max_length = 50,verbose_name = "Password")
     status = models.CharField(max_length = 50,verbose_name = "Status",default="def status", blank=True)
     image= models.ImageField(default='default.jpg', upload_to='profile_pics')

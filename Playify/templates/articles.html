@@ -19,6 +19,7 @@
 {% if articles %}
 
 {% for article in articles %}
+{% if article.author in following %}
 <div class="row">
     <div class="col-md-10 offset-md-3">
 
@@ -31,7 +32,7 @@
       <!-- Author -->
       <p class="lead">
         
-        {{article.author.username}} 
+         <a href="../user/profile/{{article.author.username}}">{{article.author.username}}</a>
       </p>
 
       <hr>
@@ -58,7 +59,7 @@
         </div>
       </div>
       </div>
-
+      {% endif %}
 {% endfor %}
 
 

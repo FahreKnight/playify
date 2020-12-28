@@ -7,14 +7,35 @@
         
         <img class="rounded-circle account-img" width="150" height="150" src="{{ user.profile.image.url }}">
         <h2 class="account-heading">Username: {{ user.username }}</h2>
-        <h2 class="account-heading">Status: {{ user.profile.status }}</h2><br>
+        <h2 class="account-heading">Status: {{ user.profile.status }}</h2>
+        <h2 class="account-heading">Follow: {{ follow }}</h2><br>
+        <a href="./following/{{user.username}}"><h2 class="mt-4">{{user.following.count}} followers</h2></a>
+          <form method = "post" data-="{{ user.username }}">
+              {% csrf_token %}
+              {% if isSame %}
+              {% else %}
+
+
+              <br>
+              
+                
+                {% if follow %} 
+                  <button id="button1" onclick="document.getElementById('button1')='a'" type = "submit" class = "btn btn-danger">Unfollow</button>
+                  {% else %}
+                  <button id="button2" onclick="document.getElementById('button2')='b'" type = "submit" class = "btn btn-primary">Follow</button>
+                  {% endif %}</button>
+
+
+              {% endif %}
+              
+              
         <h2 class="account-heading">User posts:</h2>
           {% if articles %}
 
 {% for article in articles %}
 
     <!-- Post Content Column -->
-    <div class="col-lg-8">
+    <div class="col-lg-13">
       <!-- Title -->
       <a href="{% url 'article:detail' article.id %}"><h2 class="mt-4">{{article.title}}</h2></a> 
         

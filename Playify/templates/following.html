@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+
+<p>
+    {{ n }} following <br>    
+    {% if following %}
+
+        {% for user in following %}
+        <img class="rounded-circle account-img" width="30" height="30" src="{{ user.profile.image.url }}"> <a href="../{{ user.username }}">{{ user.username }}</a><br>
+        
+        {% endfor %}
+        
+        
+        
+        {% endif %}
+        {{ followers.count }} followers <br>
+        {% if followers %}
+        {% for user in followers %}
+        
+        <img class="rounded-circle account-img" width="30" height="30" src="{{ user.image.url }}"> 
+        <a href="../{{ user.user.username }}">{{ user.user.username }}</a>
+        {% endfor %}
+        
+        
+        
+        {% endif %}
+        
+      
+
+</p>
+{% endblock body %}
+

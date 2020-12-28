@@ -6,14 +6,18 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def articles(request):
+    loggeduser = request.user
+    if not loggeduser.is_authenticated:
+        return render(request,"404.html")
     keyword = request.GET.get("keyword")
-
+    user = request.user
+    following = [user for user in user.profile.following.filter()]
     if keyword:
         articles = Article.objects.filter(title__contains = keyword)
         return render(request,"articles.html",{"articles":articles})
     articles = Article.objects.all()
 
-    return render(request,"articles.html",{"articles":articles})
+    return render(request,"articles.html",{"articles":articles,"following":following})
 def index(request):
     return render(request,"index.html")
     

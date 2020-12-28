@@ -2,11 +2,12 @@ from django.http.response import HttpResponse
 from django.shortcuts import render,redirect
 from .forms import ProfileForm, RegisterForm,LoginForm,SettingsForm
 from django.contrib import messages
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AnonymousUser, User
 from django.contrib.auth import login,authenticate,logout
 from .models import Profile
-
-
+import sys, os
+sys.path.insert(0, os.path.abspath('..article.models'))
+from article.models import Article
 
 # Create your views here.
 
@@ -71,15 +72,20 @@ def logoutUser(request):
     return redirect("index")
 
 def profile(request):
+    if not request.user.is_authenticated:
+        return render(request,"404.html")
     u_form = SettingsForm()
-
+    article = Article.objects.filter(author = request.user)
     context = {
-        'u_form': u_form
+        'u_form': u_form,
+        'articles': article
 
     }
     return render(request,"profile.html",context)
 
 def profilesettings(request):
+    if not request.user.is_authenticated:
+        return render(request,"404.html")
     if request.method == 'POST':
         u_form = SettingsForm(request.POST, instance=request.user)
         p_form = ProfileForm(request.POST, files=request.FILES, instance=request.user.profile)
@@ -100,3 +106,39 @@ def profilesettings(request):
     }
     return render(request,"profilesettings.html",context)
 
+def get_user_profile(request, username):
+    loggeduser = request.user
+    if not loggeduser.is_authenticated:
+        return render(request,"404.html")
+    loggedprofile = Profile.objects.get(user=loggeduser)
+    if User.objects.filter(username=username).exists():
+        user = User.objects.get(username=username)
+        article = Article.objects.filter(author = user)
+        viewedprofile = user.profile
+        isSame = (loggedprofile==viewedprofile)
+        if viewedprofile.user in loggedprofile.following.all():
+            follow = True
+        else:
+            follow = False
+        if request.method == 'POST':
+            if follow==True:
+                loggedprofile.following.remove(viewedprofile.user)
+            else:
+                loggedprofile.following.add(viewedprofile.user)
+            if viewedprofile.user in loggedprofile.following.all():
+                follow = True
+            else:
+                follow = False
+            return render(request, "user_profile.html", {"user":user,"articles":article,"follow":follow,"isSame":isSame})
+        return render(request, "user_profile.html", {"user":user,"articles":article,"follow":follow,"isSame":isSame})
+    return render(request,"404.html")
+
+def following(request,username):
+     if User.objects.filter(username=username).exists():
+        user = User.objects.get(username=username)
+        following = [user for user in user.profile.following.filter()]
+        followers = Profile.objects.filter(following=user)
+        n = 0
+        for f in following:
+            n= n+1
+        return render(request,"following.html",{"following":following,"n":n,"followers":followers})

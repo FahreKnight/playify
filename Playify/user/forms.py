@@ -2,7 +2,7 @@ from django import forms
 from django.contrib import auth
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
-from django.db.models.fields import AutoField
+from django.db.models.fields import AutoField, NullBooleanField
 from django.http import request
 from .models import Profile
 
@@ -69,3 +69,6 @@ class ProfileForm(forms.ModelForm):
             "image" : image
         }
         return values
+
+class FollowButton(forms.Form):
+    usern = forms.Field.bound_data
