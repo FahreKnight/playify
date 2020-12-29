@@ -3,7 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
-# Create your tests here.
+
+# @author: Kıvanç TÜRKER
 
 URL = "http://127.0.0.1:8000/"
 LOGIN = "/login/"
