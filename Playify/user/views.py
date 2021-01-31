@@ -94,7 +94,7 @@ def profilesettings(request):
             p_form.save()
             messages.success(request, f'Your account has been updated!')
 
-            return render(request,"profilesettings.html")
+            return render(request,"profile.html")
 
     else:
         u_form = SettingsForm(instance=request.user)
