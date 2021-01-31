@@ -4,3 +4,4 @@ django-cleanup==2.1.0
 django-crispy-forms==1.7.2
 django-js-asset==1.0.0
 djangorestframework==3.11.0
+Pillow==2.2.1
