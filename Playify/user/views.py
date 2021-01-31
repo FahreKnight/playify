@@ -81,7 +81,7 @@ def profile(request):
         'articles': article
 
     }
-    return render(request,"user_profile.html",context)
+    return render(request,"profile.html",context)
 
 def profilesettings(request):
     if not request.user.is_authenticated:
