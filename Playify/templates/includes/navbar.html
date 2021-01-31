@@ -5,24 +5,24 @@
         <a class="navbar-brand" href="{% url 'index'  %}">Playify</a>
         
         <div class="collapse navbar-collapse" id="navbarCollapse">
+          
           <ul class="navbar-nav mr-auto">
-            
+            {% if request.user.is_authenticated %}
             <li class="nav-item active">
-                <a class="nav-link" href="{% url 'article:articles'  %}">Main Page</a>
+                <a class="nav-link" href="{% url 'article:articles'  %}">All</a>
             </li>
-            
+            <li class="nav-item active">
+              <a class="nav-link" href="{% url 'article:articles'  %}main">Home</a>
+          </li>
           </ul>
 
           <ul class="navbar-nav ml-auto">
-          {% if request.user.is_authenticated %}
+          
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'article:dashboard'  %}">{{request.user.username}}</a>
           </li>
           <li class="nav-item active">
-            <a class="nav-link" href="{% url 'user:profile'  %}">Profile</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'user:profilesettings'  %}">Profile Settings</a>
+            <a class="nav-link" href="{{ HTTP_HOST }}/user/profile/{{article.author.username}}">Profile</a>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="{% url 'user:logout'  %}">Logout</a>

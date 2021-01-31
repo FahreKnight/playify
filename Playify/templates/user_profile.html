@@ -7,12 +7,12 @@
         
         <img class="rounded-circle account-img" width="150" height="150" src="{{ user.profile.image.url }}">
         <h2 class="account-heading">Username: {{ user.username }}</h2>
-        <h2 class="account-heading">Status: {{ user.profile.status }}</h2>
-        <h2 class="account-heading">Follow: {{ follow }}</h2><br>
+        <h2 class="account-heading">Status: {{ user.profile.status }}</h2><br>
         <a href="./following/{{user.username}}"><h2 class="mt-4">{{user.following.count}} followers</h2></a>
           <form method = "post" data-="{{ user.username }}">
               {% csrf_token %}
               {% if isSame %}
+              <a href="../profilesettings" class="btn btn-primary">Profile settings</a>
               {% else %}
 
 

@@ -19,7 +19,6 @@
 {% if articles %}
 
 {% for article in articles %}
-{% if article.author in following %}
 <div class="row">
     <div class="col-md-10 offset-md-3">
 
@@ -59,7 +58,6 @@
         </div>
       </div>
       </div>
-      {% endif %}
 {% endfor %}
 
 

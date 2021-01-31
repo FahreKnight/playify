@@ -1,28 +1,38 @@
 {% extends "layout.html" %}
+
 {% block body %}
 
-<div class="content-section">
-    <div class="media">
-      <div class="media-body">
-        
-        <img class="rounded-circle account-img" width="150" height="150" src="{{ user.profile.image.url }}">
-        <h2 class="account-heading">Username: {{ user.username }}</h2>
-        <h2 class="account-heading">Status: {{ user.profile.status }}</h2><br>
-        <a href="../profilesettings" class="btn btn-primary">Profile settings</a>
-        <h2 class="account-heading">User posts:</h2>
-          {% if articles %}
+<div class ="row">
+    
+       
+</div>
+<div class ="row">
+    <div class="col-md-10 offset-md-3">
+        <div class="col-lg-8">
+            
+      </div>
+    </div>
+
+</div>
+
+
+{% if articles %}
 
 {% for article in articles %}
+{% if article.author in following %}
+<div class="row">
+    <div class="col-md-10 offset-md-3">
 
     <!-- Post Content Column -->
     <div class="col-lg-8">
+      <img class="rounded-circle account-img" width="50" height="50" src="{{ article.author.profile.image.url }}">
       <!-- Title -->
       <a href="{% url 'article:detail' article.id %}"><h2 class="mt-4">{{article.title}}</h2></a> 
         
       <!-- Author -->
       <p class="lead">
         
-         <a href="../user/profile/{{article.author.username}}">{{article.author.username}}</a>
+         <a href="{{ HTTP_HOST }}/user/profile/{{article.author.username}}">{{article.author.username}}</a>
       </p>
 
       <hr>
@@ -47,16 +57,13 @@
       <hr>
          
         </div>
-      
+      </div>
+      </div>
+      {% endif %}
 {% endfor %}
 
 
 
 {% endif %}
-        </p>
-        
-      </div>
-    </div>
-  </div>
 
 {% endblock body %}
