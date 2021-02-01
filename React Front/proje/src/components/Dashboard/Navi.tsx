@@ -183,11 +183,14 @@ const Navi = (props: any) => {
 			</Modal>
 			<Row gutter = {5}>
 				<Col style = {{display:"flex"}}>
-					<div style = {{position: 'absolute', top: "-5px", margin: "auto", width: "100px"}}>Playify</div>
+					<Search style = {{margin:"auto"}}
+						placeholder="Enter text to search"
+						onSearch={() => {}}
+					/>
 				</Col>
 				<Col  style = {{display:"flex", alignSelf:"end"}}>
-					{!loggedUser?.username && <div style = {{position: 'inherit', right: "-830px", top: "-5px", margin: "auto", width: "100px"}}><Button style = {{margin:"auto", width: "100px", fontWeight: "bold", color: "lightcyan",  backgroundColor: "lightskyblue"}} onClick={() => toggleSignUpModal()}>Sign Up</Button></div>}
-					{!loggedUser?.username ? <div style = {{position: 'inherit', right: "-850px", top: "-5px", margin: "left", width: "100px"}}><Button style = {{margin:"left", width: "100px", fontWeight: "bold", color: "lightcyan",  backgroundColor: "lightskyblue"}} onClick={() => toggleLoginModal()}>Login</Button> </div>: <div style = {{position: 'inherit', right: '%50', top: "-5px", margin: "auto", width: "100px"}}><Button style = {{margin:"auto", width: "100px", fontWeight: "bold"}} onClick={() => logout()}>Logout</Button></div>}
+					{!loggedUser?.username && <Button style = {{margin:"auto"}} onClick={() => toggleSignUpModal()}>SingUp</Button>}
+					{!loggedUser?.username ? <Button style = {{margin:"auto"}} onClick={() => toggleLoginModal()}>Login</Button> : <Button style = {{margin:"auto"}} onClick={() => logout()}>Logout</Button>}
 				</Col>
 			</Row>
 		</div>
